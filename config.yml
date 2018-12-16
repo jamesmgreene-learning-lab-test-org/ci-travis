@@ -102,7 +102,7 @@ steps:
       ```suggestion
       - script: bundle exec jekyll build
       ```
-    position: 3
+    position: 4
 
   # ask the learner to go to the next PR
   - type: respond
