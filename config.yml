@@ -100,7 +100,7 @@ steps:
     path: .travis.yml
     body: |
       ```suggestion
-      - script: bundle exec jekyll build
+      - bundle exec jekyll build
       ```
     position: 4
 
