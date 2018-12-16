@@ -50,7 +50,7 @@ steps:
     path: .travis.yml
     body: |
       ```suggestion
-            - 2.4.1
+      - 2.4.1
       ```
     position: 3
 
