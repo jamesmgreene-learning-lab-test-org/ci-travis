@@ -25,8 +25,17 @@ steps:
 # 1 - Enable CI
 - title: Enable continuous integration
   description: Enable continuous integration on this repository.
-  event: pull_request.opened
+  event: pull_request
   actions:
+
+  - type: gate
+    gates:
+      - left: '%payload.action%'
+        operator: ===
+        right: open
+      - left: '%payload.action%'
+        operator: ===
+        right: reopened
 
   - type: octokit
     method: checks.listForRef
@@ -39,12 +48,17 @@ steps:
   - type: gate
     left: '%actions.checksList.data.total_count%'
     else:
+    - type: octokit
+      method: pulls.update
+      owner: '%payload.repository.owner.login%'
+      repo: '%payload.repository.name%'
+      number: '%payload.number%'
+      state: closed
     - type: respond
       with: no-checks.md
 
   # validates they turned on CI
   - type: respond
-    issue: Welcome
     with: 01.2_congratulations.md
 
   # asks learner to open new PR
