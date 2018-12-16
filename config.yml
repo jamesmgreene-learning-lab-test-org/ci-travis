@@ -97,12 +97,12 @@ steps:
     repo: '%payload.repository.name%'
     number: '%actions.newPR.data.number%'
     commit_id: '%actions.newPR.data.head.sha%'
-    path: .circleci/config.yml
+    path: .travis.yml
     body: |
       ```suggestion
-                command: bundle exec jekyll build
+      - script: bundle exec jekyll build
       ```
-    position: 11
+    position: 3
 
   # ask the learner to go to the next PR
   - type: respond
