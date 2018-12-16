@@ -37,33 +37,26 @@ steps:
     issue: '%payload.check_run.pull_requests.0.number%'
     with: 01.2_congratulations.md
 
-  # asks learner to open new PR
   - type: respond
-    issue: Welcome
-    with: 01.3_next-steps.md
-
-# 2 - Add new code
-- title: Introduce the configuration file
-  description: Learn how to use CI by introducing a configuration file.
-  event: pull_request.opened
-  actions:
-
-  # introduces learner to the build status at the provider page (or the checks tab?), asks learner to commit a fix
-  - type: respond
+    issue: '%payload.check_run.pull_requests.0.number%'
     with: 02.1_build-status.md
 
   - type: octokit
     method: pullRequests.createComment
     owner: '%payload.repository.owner.login%'
     repo: '%payload.repository.name%'
-    number: '%payload.number%'
-    commit_id: '%payload.pull_request.head.sha%'
-    path: .circleci/config.yml
+    number: '%payload.check_run.pull_requests.0.number%'
+    commit_id: '%payload.check_run.pull_requests.0.head.sha%'
+    path: .travis.yml
     body: |
       ```suggestion
-            - image: circleci/ruby:2.4.1-node-browsers
+            - 2.4.1
       ```
-    position: 5
+    position: 3
+
+  # close initial issue
+  - type: closeIssue
+    issue: Welcome
 
 - title: Specify the docker image
   description: Specify the docker image
