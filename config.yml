@@ -25,14 +25,22 @@ steps:
 # 1 - Enable CI
 - title: Enable continuous integration
   description: Enable continuous integration on this repository.
-  event: status
+  event: pull_request.opened
   actions:
 
-  # waits for circleci to report a status, any status
+  - type: octokit
+    method: checks.listForRef
+    owner: '%payload.repository.owner.login%'
+    repo: '%payload.repository.name%'
+    ref: '%payload.pull_request.head.ref%'
+    action_id: checksList
+
+  # waits for Travis CI to report a check run
   - type: gate
-    left: '%payload.context%'
-    operator: ===
-    right: ci/circleci
+    left: '%actions.checksList.data.total_count%'
+    else:
+    - type: respond
+      with: no-checks.md
 
   # validates they turned on CI
   - type: respond
