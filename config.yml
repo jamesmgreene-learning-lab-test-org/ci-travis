@@ -32,7 +32,7 @@ steps:
     gates:
       - left: '%payload.action%'
         operator: ===
-        right: open
+        right: opened
       - left: '%payload.action%'
         operator: ===
         right: reopened
