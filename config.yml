@@ -49,7 +49,7 @@ steps:
     left: '%actions.checksList.data.total_count%'
     else:
     - type: octokit
-      method: pulls.update
+      method: pullRequests.update
       owner: '%payload.repository.owner.login%'
       repo: '%payload.repository.name%'
       number: '%payload.number%'
