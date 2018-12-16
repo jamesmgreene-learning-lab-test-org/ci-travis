@@ -25,40 +25,16 @@ steps:
 # 1 - Enable CI
 - title: Enable continuous integration
   description: Enable continuous integration on this repository.
-  event: pull_request
+  event: check_run
   actions:
 
   - type: gate
-    gates:
-      - left: '%payload.action%'
-        operator: ===
-        right: opened
-      - left: '%payload.action%'
-        operator: ===
-        right: reopened
+    left: '%payload.check_run.app.name%'
+    operator: ===
+    right: Travis CI
 
-  - type: octokit
-    method: checks.listForRef
-    owner: '%payload.repository.owner.login%'
-    repo: '%payload.repository.name%'
-    ref: '%payload.pull_request.head.ref%'
-    action_id: checksList
-
-  # waits for Travis CI to report a check run
-  - type: gate
-    left: '%actions.checksList.data.total_count%'
-    else:
-    - type: octokit
-      method: pullRequests.update
-      owner: '%payload.repository.owner.login%'
-      repo: '%payload.repository.name%'
-      number: '%payload.number%'
-      state: closed
-    - type: respond
-      with: no-checks.md
-
-  # validates they turned on CI
   - type: respond
+    issue: '%payload.check_run.pull_requests.0.number%'
     with: 01.2_congratulations.md
 
   # asks learner to open new PR
