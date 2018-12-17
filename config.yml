@@ -204,12 +204,35 @@ steps:
     repo: '%payload.repository.name%'
     number: '%actions.linksPR.data.number%'
     commit_id: '%actions.linksPR.data.head.sha%'
-    path: .circleci/config.yml
+    path: .travis.yml
     body: |
       ```suggestion
-                command: bundle exec htmlproofer ./_site --check-html
       ```
-    position: 22
+    position: 1
+
+  - type: octokit
+    method: pullRequests.createComment
+    owner: '%payload.repository.owner.login%'
+    repo: '%payload.repository.name%'
+    number: '%actions.linksPR.data.number%'
+    commit_id: '%actions.linksPR.data.head.sha%'
+    path: .travis.yml
+    body: |
+      ```suggestion
+      ```
+    position: 2
+
+  - type: octokit
+    method: pullRequests.createComment
+    owner: '%payload.repository.owner.login%'
+    repo: '%payload.repository.name%'
+    number: '%actions.linksPR.data.number%'
+    commit_id: '%actions.linksPR.data.head.sha%'
+    path: .travis.yml
+    body: |
+      ```suggestion
+      ```
+    position: 3
 
   - type: respond
     with: 03.6_go-to-feature-pr.md # points learner to feature PR
