@@ -4,7 +4,7 @@ description: A sparkles course.
 tags:
   - Continuous Integration
 template:
-    name: continuous-integration
+    name: continuous-integration-travis
     repo: ci-travis-template
 before:
   # open issue 1 (welcome)
