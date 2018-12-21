@@ -26,7 +26,7 @@ steps:
 - title: Enable continuous integration
   description: Enable continuous integration on this repository.
   link: '{{ repoUrl }}/issues/1'
-  event: status
+  event: check_run
   actions:
   # waits for ci to report a status, any status
   - type: gate
