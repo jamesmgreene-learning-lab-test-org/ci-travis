@@ -1,6 +1,6 @@
 title: Continuous integration with Travis CI
 tagline: Use CI
-description: A sparkles course.
+description: Learn about the principles of continuous integration with GitHub and Travis CI.
 tags:
   - Continuous Integration
 template:
@@ -11,10 +11,12 @@ before:
 - type: createIssue
   title: Welcome
   body: 00.0_welcome.md
+  data:
+    prUrl: '%payload.repository.html_url%/compare/master...initial-travis-config?expand=1'
 
 # Repo artifacts:
 # 1. Issue: Welcome
-# 2. PR: [title created by learner] - add initial circle config
+# 2. PR: [title created by learner] - add initial config
 # 3. PR: Configure the build
 # 4. PR: Add external links to our docs
 # 5. Issue: Continuous deployment
@@ -25,9 +27,10 @@ steps:
 # 1 - Enable CI
 - title: Enable continuous integration
   description: Enable continuous integration on this repository.
+  link: '{{ repoUrl }}/issues/1'
   event: check_run
   actions:
-
+  # waits for ci to report a status, any status
   - type: gate
     left: '%payload.check_run.app.name%'
     operator: ===
@@ -58,7 +61,9 @@ steps:
   - type: closeIssue
     issue: Welcome
 
+#2 - Specify the docker image
 - title: Specify the docker image
+  link: '{{ repoUrl }}/pull/2'
   description: Specify the docker image
   event: pull_request.synchronize
   actions:
@@ -66,13 +71,14 @@ steps:
   - type: respond
     with: 02.2_new-status.md
 
-# 4 - Merge your fix
+# 3 - Merge your fix
 - title: Merge the configuration
+  link: '{{ repoUrl }}/pull/2'
   description: Share your CI configuration with the team by merging it.
   event: pull_request.closed
   actions:
 
-  # # merge master in so we have config
+  # merge master in so we have config
   - type: mergeBranch
     head: master
     base: custom-build
@@ -106,12 +112,14 @@ steps:
 
   # ask the learner to go to the next PR
   - type: respond
-    with: 02.3_go-to-customize-build.md
+    with: 04.2_go-to-customize-build.md
+    data:
+      url: 'https://github.com/%payload.repository.owner.login%/%payload.repository.name%/pull/3'
 
-
-# 5 - Add validation
-- title: Test your build
+# 4 - Add validation
+- title: Add validation
   description: Add automated builds for new commits
+  link: '{{ repoUrl }}/pull/3'
   event: pull_request.synchronize   # learner added a link checker
   actions:
 
@@ -122,9 +130,10 @@ steps:
   - type: respond
     with: 05.1_protect-branch.md
 
-# 6 - Protect a branch based on the CI build status
-- title: Protect a branch
+# 5 - Protect a branch based on the CI build status
+- title: Protect the master branch
   description: Require that CI returns a successful status before a PR can be merged.
+  link: '{{ repoUrl }}/pull/3'
   event: pull_request_review
 
   actions:
@@ -165,9 +174,10 @@ steps:
       ```
     position: 4
 
-    # 7 - Fix the broken build
+# 6 - Fix the broken build
 - title: Fix the broken build
   description: Fix any broken links currently in our codebase.
+  link: '{{ repoUrl }}/pull/3'
   event: pull_request.synchronize
   actions:
 
@@ -236,10 +246,13 @@ steps:
 
   - type: respond
     with: 08.2_go-to-feature-pr.md # points learner to feature PR
+    data:
+      url: 'https://github.com/%payload.repository.owner.login%/%payload.repository.name%/pull/4'
 
 # 8 - Add a unit test
-- title: Add a link checker
-  description: Check for broken links using CI
+- title: Add an HTMLProofer unit test
+  description: Check for broken links using CI.
+  link: '{{ repoUrl }}/pull/4'
   event: pull_request.synchronize #PR 5 with the addition of a unit test
 
   actions:
@@ -264,12 +277,14 @@ steps:
     path: index.md
     body: |
       ```suggestion
-      Welcome to our Documentation site. How about a visit to [GitHub Docs](https://help.github.com/)
+      Welcome to our Documentation site. How about a visit to [GitHub Docs](https://help.github.com/articles/set-up-git/)
       ```
     position: 5
 
+# 9 - Fix the borken link
 - title: Fix the broken link
-  description: Fix the broken link
+  description: Fix the broken link.
+  link: '{{ repoUrl }}/pull/4'
   event: pull_request.synchronize
 
   actions:
@@ -277,9 +292,10 @@ steps:
   - type: respond
     with: 10.1_merge.md
 
-# 9 - Merge your unit test
-- title: Merge the link checker
+# 10 - Merge your unit test
+- title: Merge the unit test
   description: Merge the test.
+  link: '{{ repoUrl }}/pull/4'
   event: pull_request.closed
 
   actions:
@@ -293,10 +309,13 @@ steps:
   - type: respond
     issue: Add external links to docs
     with: 11.2_goto-deployment.md
+    data:
+      url: 'https://github.com/%payload.repository.owner.login%/%payload.repository.name%/issues/5'
 
-# 10 - Deploy
+# 11 - Deploy
 - title: Deploy
   description: Add continuous deployment to your pipeline.
+  link: '{{ repoUrl }}/issues/5'
   event: deployment
 
   actions:
@@ -305,8 +324,11 @@ steps:
   - type: respond
     issue: Continuous deployment
     with: 12.1_see-deployed.md
+    data:
+      url: 'https://github.com/%payload.repository.owner.login%/%payload.repository.name%/issues/6'
 
-  # @todo create additional PRs for continued study
+  - type: closeIssue
+    issue: Continuous deployment
 
   # final issue
   - type: createIssue
