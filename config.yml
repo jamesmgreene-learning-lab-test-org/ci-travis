@@ -57,10 +57,10 @@ steps:
   - type: closeIssue
     issue: Welcome
 
-#2 - Specify the docker image
-- title: Specify the docker image
+#2 - Use a specific version of a language
+- title: Use a specific version of a language
   link: '{{ repoUrl }}/pull/2'
-  description: Specify the docker image
+  description: Perform CI tests with a specific version of Ruby.
   event: pull_request.synchronize
   actions:
 
