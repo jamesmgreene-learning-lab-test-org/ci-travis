@@ -214,6 +214,31 @@ steps:
     body: |
       ```suggestion
       ```
+    position: 2
+
+  - type: octokit
+    method: pullRequests.createComment
+    owner: '%payload.repository.owner.login%'
+    repo: '%payload.repository.name%'
+    number: '%actions.linksPR.data.number%'
+    commit_id: '%actions.linksPR.data.head.sha%'
+    path: .travis.yml
+    body: |
+      ```suggestion
+            script: script/testlinks
+      ```
+    position: 9
+
+  - type: octokit
+    method: pullRequests.createComment
+    owner: '%payload.repository.owner.login%'
+    repo: '%payload.repository.name%'
+    number: '%actions.linksPR.data.number%'
+    commit_id: '%actions.linksPR.data.head.sha%'
+    path: .travis.yml
+    body: |
+      ```suggestion
+      ```
     position: 1
 
   - type: octokit
@@ -226,19 +251,8 @@ steps:
     body: |
       ```suggestion
       ```
-    position: 2
-
-  - type: octokit
-    method: pullRequests.createComment
-    owner: '%payload.repository.owner.login%'
-    repo: '%payload.repository.name%'
-    number: '%actions.linksPR.data.number%'
-    commit_id: '%actions.linksPR.data.head.sha%'
-    path: .travis.yml
-    body: |
-      ```suggestion
-      ```
     position: 3
+
 
   - type: respond
     with: 08.2_go-to-feature-pr.md # points learner to feature PR
