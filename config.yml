@@ -51,7 +51,7 @@ steps:
       ```suggestion
       - 2.4.1
       ```
-    position: 3
+    position: 4
 
   # close initial issue
   - type: closeIssue
