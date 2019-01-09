@@ -38,6 +38,11 @@ steps:
     operator: ===
     right: Travis CI
 
+  - type: gate
+    left: '%payload.check_run.pull_requests.length%'
+    operator: '>'
+    right: 0
+
   - type: respond
     issue: '%payload.check_run.pull_requests.0.number%'
     with: 02.1_build-status.md
