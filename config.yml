@@ -196,7 +196,8 @@ steps:
 - title: Merge code with a successful build
   description: Merge your code.
   event: pull_request.closed
-
+  link: '{{ repoUrl }}/pull/3'
+  
   actions:
 
   # merge master in so we have config
