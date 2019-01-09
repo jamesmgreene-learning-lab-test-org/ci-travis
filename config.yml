@@ -305,6 +305,8 @@ steps:
 
   actions:
 
+  - type: requestReviewFromRegistrant
+  
   - type: respond
     with: 10.1_merge.md
 
