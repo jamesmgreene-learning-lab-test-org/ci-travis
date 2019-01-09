@@ -7,6 +7,8 @@ template:
     name: continuous-integration-travis
     repo: ci-travis-template
 before:
+- type: updateBranchProtection
+  enforce_admins: false
   # open issue 1 (welcome)
 - type: createIssue
   title: Welcome
@@ -64,8 +66,9 @@ steps:
   event: pull_request.synchronize
   actions:
 
-  - type: respond
-    with: 02.2_new-status.md
+  - type: createReview
+    body: 02.2_new-status.md
+    event: APPROVE
 
 # 3 - Merge your fix
 - title: Merge the configuration
@@ -125,6 +128,9 @@ steps:
   # asks the learner to turn on branch protection, and then approve the PR
   - type: respond
     with: 05.1_protect-branch.md
+    data:
+      url: '%payload.pull_request.html_url%'
+      repo: '%payload.repository.html_url%'
 
 # 5 - Protect a branch based on the CI build status
 - title: Protect the master branch
@@ -299,6 +305,8 @@ steps:
 
   actions:
 
+  - type: requestReviewFromRegistrant
+  
   - type: respond
     with: 10.1_merge.md
 
