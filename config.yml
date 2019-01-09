@@ -7,6 +7,7 @@ template:
     name: continuous-integration-travis
     repo: ci-travis-template
 before:
+- type: updateBranchProtection
   # open issue 1 (welcome)
 - type: createIssue
   title: Welcome
@@ -125,6 +126,9 @@ steps:
   # asks the learner to turn on branch protection, and then approve the PR
   - type: respond
     with: 05.1_protect-branch.md
+    data:
+      url: '%payload.pull_request.html_url%'
+      repo: '%payload.repository.html_url%'
 
 # 5 - Protect a branch based on the CI build status
 - title: Protect the master branch
