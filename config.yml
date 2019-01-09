@@ -8,7 +8,7 @@ template:
     repo: ci-travis-template
 before:
 - type: updateBranchProtection
-  enforceAdmins: false
+  enforce_admins: false
   # open issue 1 (welcome)
 - type: createIssue
   title: Welcome
