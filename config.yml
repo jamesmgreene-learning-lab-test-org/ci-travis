@@ -65,8 +65,9 @@ steps:
   event: pull_request.synchronize
   actions:
 
-  - type: respond
-    with: 02.2_new-status.md
+  - type: createReview
+    body: 02.2_new-status.md
+    event: APPROVE
 
 # 3 - Merge your fix
 - title: Merge the configuration
