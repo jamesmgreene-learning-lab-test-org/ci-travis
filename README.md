@@ -2,10 +2,10 @@ Once you've written code on GitHub, how do you make sure it's bug free? Continuo
 
 After completing this course, you will be able to:
 
-- identify when a project is using continuous integration
-- set up continuous integration for one of your projects
-- protect branches based on the result of a build from continuous integration
-- customize builds
-- add tests for your project 
-- define continuous delivery
-- define continuous deployment
+- Identify when a project is using continuous integration
+- Set up continuous integration for one of your projects
+- Protect branches based on the result of a build from continuous integration
+- Customize builds
+- Add tests for your project 
+- Define continuous delivery
+- Define continuous deployment
