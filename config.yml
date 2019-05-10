@@ -340,7 +340,7 @@ steps:
 - title: Deploy
   description: Add continuous deployment to your pipeline.
   link: '{{ repoUrl }}/issues/5'
-  event: deployment
+  event: pages_build
 
   actions:
 
@@ -349,7 +349,7 @@ steps:
     issue: Continuous deployment
     with: 12.1_see-deployed.md
     data:
-      url: 'https://github.com/%payload.repository.owner.login%/%payload.repository.name%/issues/6'
+      url: '{{ repoUrl }}/issues/6'
 
   - type: closeIssue
     issue: Continuous deployment
